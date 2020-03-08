@@ -23,6 +23,29 @@
 static void obj_set_size(Object *);
 static void obj_set_value(Object *, void *);
 
+void
+obj_debug(Object *o)
+{
+	printf("Object Type: %d\n", o->type);
+	printf("Object Size: %zu\n", o->size);
+	switch (o->type) {
+		case CHAR:
+			printf("Object Data: %c\n", *(o->char_data));
+			break;
+		case DOUBLE:
+			printf("Object Data: %.2lf\n", *(o->double_data));
+			break;
+		case FLOAT:
+			printf("Object Data: %.2f\n", *(o->float_data));
+			break;
+		case INT:
+			printf("Object Data: %d\n", *(o->int_data));
+			break;
+		default:
+			err(1, "failed calculate size, invalid type");
+	}
+}
+
 static void
 obj_set_value(Object *o, void *v)
 {

@@ -41,6 +41,7 @@ typedef struct {
 /* object.c */
 
 Object 		 *new_obj(enum obj_type, void *);
+void		 obj_debug(Object *);
 void		 obj_free(Object *);
 
 #endif /* _CAPYBARA_H */

@@ -32,13 +32,8 @@ main(int argc, char *argv[])
 	ov = new_obj(FLOAT, &v);
 	ox = new_obj(DOUBLE, &x);
 
-	printf("Object v Type: %d\n", ov->type);
-	printf("Object v Size: %zu\n", ov->size);
-	printf("Object v Value: %.2f\n", *(ov->float_data));
-
-	printf("Object x Type: %d\n", ox->type);
-	printf("Object x Size: %zu\n", ox->size);
-	printf("Object x Value: %.2lf\n", *(ox->double_data));
+	obj_debug(ov);
+	obj_debug(ox);
 
 	obj_free(ov);
 	obj_free(ox);
