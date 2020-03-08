@@ -14,40 +14,21 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef _CAPYBARA_H
-#define _CAPYBARA_H
+#include <stdio.h>
 
-/* types of objects */
-enum obj_type {
-	CHAR,
-	DOUBLE,
-	FLOAT,
-	INT
-};
+#include "capybara.h"
 
-/* object union tagged */
-typedef struct {
-	enum obj_type	type;	 /* type of object */
-	size_t 		size;	 /* size data */
-	/* same space memory */
-	union {
-		struct { char 	char_data; };
-		struct { double double_data; };
-		struct { float 	float_data; };
-		struct { int 	int_data; };
-	};
-} Object;
+int
+main(int argc, char *argv[])
+{
+	int 	i;
+	Object 	*o;
 
-typedef struct {
-	char	*name;
-	size_t	size;
-	Object	*data;
-} Index;
+	o = new_obj(FLOAT);
 
-/* object.c */
+	printf("Object Type: %d\n", o->type);
+	printf("Object Size: %zu\n", o->size);
 
-Object 		 *new_obj(enum obj_type);
-void		 obj_set_value_float(Object *, float);
-void		 obj_free(Object *);
-
-#endif /* _CAPYBARA_H */
+	obj_free(o);
+	return (0);
+}

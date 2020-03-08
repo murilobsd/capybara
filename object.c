@@ -20,8 +20,10 @@
 
 #include "capybara.h"
 
+static void obj_set_size(Object *);
+
 Object *
-new_obj(enum obj_type t, const size_t num)
+new_obj(enum obj_type t)
 {
 	Object *o;
 
@@ -31,48 +33,57 @@ new_obj(enum obj_type t, const size_t num)
 		err(1, "failed alloc object");
 
 	o->type = t;
-	o->size = num;
-	switch (t) {
+	obj_set_size(o); // bytes
+
+	return o;
+}
+
+static void
+obj_set_size(Object *o)
+{
+	switch (o->type) {
 		case CHAR:
-			o->char_data = (char *)malloc(sizeof(char) * num);
+			o->size = sizeof(char);
 			break;
 		case DOUBLE:
-			o->double_data = (double *)malloc(sizeof(double) * num);
+			o->size = sizeof(double);
 			break;
 		case FLOAT:
-			o->float_data = (float *)malloc(sizeof(float) * num);
+			o->size = sizeof(float);
 			break;
 		case INT:
-			o->int_data = (int *)malloc(sizeof(int) * num);
+			o->size = sizeof(int);
 			break;
 		default:
-			o->double_data = (double *)malloc(sizeof(double) * num);
+			err(1, "failed calculate size, invalid type");
+	}
+}
+
+void
+obj_set_value_float(Object *o, float v)
+{
+	switch (o->type) {
+		case CHAR:
+			o->char_data = (char)v;
+			break;
+		case DOUBLE:
+			o->double_data = (double)v;
+			break;
+		case FLOAT:
+			o->float_data = (float)v;
+			break;
+		case INT:
+			o->int_data = (int)v;
+			break;
+		default:
+			o->double_data = (double)v;
 			break;
 	}
-	return o;
 }
 
 void
 obj_free(Object *o)
 {
 	if (o == NULL) return;
-
-	switch (o->type) {
-		case CHAR:
-			free(o->char_data);
-			break;
-		case DOUBLE:
-			free(o->double_data);
-			break;
-		case FLOAT:
-			free(o->float_data);
-			break;
-		case INT:
-			free(o->int_data);
-			break;
-		default:
-			free(o->double_data);
-			break;
-	}
 	free(o);
 }
