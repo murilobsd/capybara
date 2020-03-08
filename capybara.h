@@ -31,23 +31,16 @@ typedef struct {
 	size_t 		size;	 /* size data */
 	/* same space memory */
 	union {
-		struct { char 	char_data; };
-		struct { double double_data; };
-		struct { float 	float_data; };
-		struct { int 	int_data; };
+		struct { char 	*char_data; };
+		struct { double *double_data; };
+		struct { float 	*float_data; };
+		struct { int 	*int_data; };
 	};
 } Object;
 
-typedef struct {
-	char	*name;
-	size_t	size;
-	Object	*data;
-} Index;
-
 /* object.c */
 
-Object 		 *new_obj(enum obj_type);
-void		 obj_set_value_float(Object *, float);
+Object 		 *new_obj(enum obj_type, void *);
 void		 obj_free(Object *);
 
 #endif /* _CAPYBARA_H */

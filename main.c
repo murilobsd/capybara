@@ -22,13 +22,25 @@ int
 main(int argc, char *argv[])
 {
 	int 	i;
-	Object 	*o;
+	Object 	*ov, *ox;
+	float	v;		// simple value
+	double 	x;
 
-	o = new_obj(FLOAT);
+	v = 1.23;
+	x = 2.34;
 
-	printf("Object Type: %d\n", o->type);
-	printf("Object Size: %zu\n", o->size);
+	ov = new_obj(FLOAT, &v);
+	ox = new_obj(DOUBLE, &x);
 
-	obj_free(o);
+	printf("Object v Type: %d\n", ov->type);
+	printf("Object v Size: %zu\n", ov->size);
+	printf("Object v Value: %.2f\n", *(ov->float_data));
+
+	printf("Object x Type: %d\n", ox->type);
+	printf("Object x Size: %zu\n", ox->size);
+	printf("Object x Value: %.2lf\n", *(ox->double_data));
+
+	obj_free(ov);
+	obj_free(ox);
 	return (0);
 }

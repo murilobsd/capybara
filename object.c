@@ -21,9 +21,31 @@
 #include "capybara.h"
 
 static void obj_set_size(Object *);
+static void obj_set_value(Object *, void *);
+
+static void
+obj_set_value(Object *o, void *v)
+{
+	switch (o->type) {
+		case CHAR:
+			o->char_data = (char *)v;
+			break;
+		case DOUBLE:
+			o->double_data = (double *)v;
+			break;
+		case FLOAT:
+			o->float_data = (float *)v;
+			break;
+		case INT:
+			o->int_data = (int *)v;
+			break;
+		default:
+			err(1, "failed calculate size, invalid type");
+	}
+}
 
 Object *
-new_obj(enum obj_type t)
+new_obj(enum obj_type t, void *v)
 {
 	Object *o;
 
@@ -34,6 +56,7 @@ new_obj(enum obj_type t)
 
 	o->type = t;
 	obj_set_size(o); // bytes
+	obj_set_value(o, v);
 
 	return o;
 }
@@ -56,28 +79,6 @@ obj_set_size(Object *o)
 			break;
 		default:
 			err(1, "failed calculate size, invalid type");
-	}
-}
-
-void
-obj_set_value_float(Object *o, float v)
-{
-	switch (o->type) {
-		case CHAR:
-			o->char_data = (char)v;
-			break;
-		case DOUBLE:
-			o->double_data = (double)v;
-			break;
-		case FLOAT:
-			o->float_data = (float)v;
-			break;
-		case INT:
-			o->int_data = (int)v;
-			break;
-		default:
-			o->double_data = (double)v;
-			break;
 	}
 }
 
