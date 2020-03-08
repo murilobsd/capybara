@@ -29,8 +29,8 @@ main(int argc, char *argv[])
 	v = 1.23;
 	x = 2.34;
 
-	ov = new_obj(FLOAT, &v);
-	ox = new_obj(DOUBLE, &x);
+	ov = new_obj(&v, FLOAT);
+	ox = new_obj(&x, DOUBLE);
 
 	obj_debug(ov);
 	obj_debug(ox);

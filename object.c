@@ -21,7 +21,7 @@
 #include "capybara.h"
 
 static void obj_set_size(Object *);
-static void obj_set_value(Object *, void *);
+static void obj_set_value(Object *, const void *);
 
 void
 obj_debug(Object *o)
@@ -47,7 +47,7 @@ obj_debug(Object *o)
 }
 
 static void
-obj_set_value(Object *o, void *v)
+obj_set_value(Object *o, const void *v)
 {
 	switch (o->type) {
 		case CHAR:
@@ -68,7 +68,7 @@ obj_set_value(Object *o, void *v)
 }
 
 Object *
-new_obj(enum obj_type t, void *v)
+new_obj(const void *v, enum obj_type t)
 {
 	Object *o;
 

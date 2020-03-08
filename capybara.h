@@ -40,7 +40,7 @@ typedef struct {
 
 /* object.c */
 
-Object 		 *new_obj(enum obj_type, void *);
+Object 		 *new_obj(const void *, enum obj_type);
 void		 obj_debug(Object *);
 void		 obj_free(Object *);
 
