@@ -14,28 +14,85 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <err.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "capybara.h"
+typedef struct serie_int32 serie_int32_t;
+
+/* serie_int32 operations */
+typedef struct {
+	const char 	*(*set_name)(serie_int32_t *, const char *);
+	char 		*(*get_name)(serie_int32_t *);
+} serie_int32_ops;
+
+/* serie_int32 */
+struct serie_int32 {
+	serie_int32_ops *ops;
+};
+
+/* implementation */
+struct serie_int32_impl {
+	serie_int32_ops *ops;
+	char *name;
+};
+
+serie_int32_t		 *serie_int32_new(void);
+static const char 	 *set_name(serie_int32_t *, const char *);
+static char 	 	 *get_name(serie_int32_t *);
+
+static serie_int32_ops int32_ops = {
+	set_name,
+	get_name,
+};
 
 int
 main(int argc, char *argv[])
 {
-	int 	i;
-	Object 	*ov, *ox;
-	float	v;		// simple value
-	double 	x;
+	serie_int32_t *s1 = serie_int32_new();
+	s1->ops->set_name(s1, "serie 1");
 
-	v = 1.23;
-	x = 2.34;
+	printf("Serie name: %s\n", s1->ops->get_name(s1));
 
-	ov = new_obj(&v, FLOAT);
-	ox = new_obj(&x, DOUBLE);
+	free(s1);
 
-	obj_debug(ov);
-	obj_debug(ox);
-
-	obj_free(ov);
-	obj_free(ox);
 	return (0);
+}
+
+static char *
+get_name(serie_int32_t *s)
+{
+	return (struct serie_int32_impl *)s->name;
+}
+
+static const char *
+set_name(serie_int32_t *s, const char *name)
+{
+	char *n;
+
+	if (name == NULL) {
+		(struct serie_int32_impl *)s->name = NULL;
+		return NULL;
+	}
+
+	n = strdup(name);
+	if (n == NULL)
+		err(1, NULL);
+
+	(struct serie_int32_impl *)s->name = n;
+	return NULL;
+}
+
+serie_int32_t *
+serie_int32_new(void)
+{
+	struct serie_int32_impl *s;
+
+	if ((s = calloc(1, sizeof(struct serie_int32_impl))) == NULL)
+		err(1, "failed alloc serie");
+
+	s->ops = &int32_ops;
+
+	return (serie_int32_t *)s;
 }
