@@ -19,12 +19,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define SERIE ((struct serie_int32_impl *)s)
+
 typedef struct serie_int32 serie_int32_t;
 
 /* serie_int32 operations */
 typedef struct {
 	const char 	*(*set_name)(serie_int32_t *, const char *);
 	char 		*(*get_name)(serie_int32_t *);
+	void		(*free_serie)(serie_int32_t *);
 } serie_int32_ops;
 
 /* serie_int32 */
@@ -41,11 +44,7 @@ struct serie_int32_impl {
 serie_int32_t		 *serie_int32_new(void);
 static const char 	 *set_name(serie_int32_t *, const char *);
 static char 	 	 *get_name(serie_int32_t *);
-
-static serie_int32_ops int32_ops = {
-	set_name,
-	get_name,
-};
+static void 	 	 free_serie(serie_int32_t *);
 
 int
 main(int argc, char *argv[])
@@ -55,15 +54,25 @@ main(int argc, char *argv[])
 
 	printf("Serie name: %s\n", s1->ops->get_name(s1));
 
-	free(s1);
+	s1->ops->free_serie(s1);
 
 	return (0);
+}
+
+static void
+free_serie(serie_int32_t *s)
+{
+	if (SERIE == NULL) return;
+	if (SERIE->name != NULL) {
+		free(SERIE->name);
+	}
+	free(SERIE);
 }
 
 static char *
 get_name(serie_int32_t *s)
 {
-	return (struct serie_int32_impl *)s->name;
+	return SERIE->name;
 }
 
 static const char *
@@ -72,7 +81,7 @@ set_name(serie_int32_t *s, const char *name)
 	char *n;
 
 	if (name == NULL) {
-		(struct serie_int32_impl *)s->name = NULL;
+		SERIE->name = NULL;
 		return NULL;
 	}
 
@@ -80,9 +89,15 @@ set_name(serie_int32_t *s, const char *name)
 	if (n == NULL)
 		err(1, NULL);
 
-	(struct serie_int32_impl *)s->name = n;
+	SERIE->name = n;
 	return NULL;
 }
+
+static serie_int32_ops int32_ops = {
+	set_name,
+	get_name,
+	free_serie,
+};
 
 serie_int32_t *
 serie_int32_new(void)
