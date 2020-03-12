@@ -16,6 +16,7 @@
 
 #include <err.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,6 +29,8 @@ typedef struct {
 	const char 	*(*set_name)(serie_int32_t *, const char *);
 	char 		*(*get_name)(serie_int32_t *);
 	void		(*free_serie)(serie_int32_t *);
+	int		(*resize)(serie_int32_t *);
+	int		(*add)(serie_int32_t *, int32_t);
 } serie_int32_ops;
 
 /* serie_int32 */
@@ -38,7 +41,12 @@ struct serie_int32 {
 /* implementation */
 struct serie_int32_impl {
 	serie_int32_ops *ops;
-	char *name;
+
+	/* internal */
+	char 	*name;
+	int32_t *data;
+	size_t 	size;
+	size_t	capacity;
 };
 
 serie_int32_t		 *serie_int32_new(void);
@@ -97,6 +105,8 @@ static serie_int32_ops int32_ops = {
 	set_name,
 	get_name,
 	free_serie,
+	resize,
+	add,
 };
 
 serie_int32_t *
