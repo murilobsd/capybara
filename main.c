@@ -29,7 +29,6 @@ typedef struct {
 	const char 	*(*set_name)(serie_int32_t *, const char *);
 	char 		*(*get_name)(serie_int32_t *);
 	void		(*free_serie)(serie_int32_t *);
-	int		(*resize)(serie_int32_t *);
 	int		(*add)(serie_int32_t *, int32_t);
 } serie_int32_ops;
 
@@ -54,7 +53,7 @@ serie_int32_t		 *serie_int32_new(void);
 static const char 	 *set_name(serie_int32_t *, const char *);
 static char 	 	 *get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
-static int 	 	 resize(serie_int32_t *);
+static int 	 	 resize(struct serie_int32_impl *);
 static int 	 	 add(serie_int32_t *, int32_t);
 
 /* utils */
@@ -66,7 +65,6 @@ static serie_int32_ops int32_ops = {
 	set_name,
 	get_name,
 	free_serie,
-	resize,
 	add,
 };
 
@@ -84,7 +82,7 @@ main(int argc, char *argv[])
 }
 
 static int
-resize(serie_int32_t *s)
+resize(struct serie_int32_impl *s)
 {
 	int32_t *data;
 	size_t nsize; /* new size */
@@ -92,13 +90,13 @@ resize(serie_int32_t *s)
 	nsize = SERIE->size * 2;
 
 	// first time size = 0
-	if (nsize = 0)
+	if (nsize == 0)
 		nsize = 4;
 
-	data = xrealloc(SELF->data, nsize + sizeof(int32_t));
+	data = xrealloc(SERIE->data, nsize + sizeof(int32_t));
 
-	SELF->data = data;
-	SELF->capacity = nsize;
+	SERIE->data = data;
+	SERIE->capacity = nsize;
 
 	return 0;
 }
@@ -106,6 +104,11 @@ resize(serie_int32_t *s)
 static int
 add(serie_int32_t *s, int32_t v)
 {
+	if (SERIE->size == SERIE->capacity)
+		resize(SERIE);
+
+	SERIE->data[SERIE->size++] = v;
+
 	return 0;
 }
 
@@ -113,9 +116,10 @@ static void
 free_serie(serie_int32_t *s)
 {
 	if (SERIE == NULL) return;
-	if (SERIE->name != NULL) {
+	if (SERIE->name != NULL)
 		free(SERIE->name);
-	}
+	if (SERIE->data != NULL)
+		free(SERIE->data);
 	free(SERIE);
 }
 
