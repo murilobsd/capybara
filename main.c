@@ -49,10 +49,26 @@ struct serie_int32_impl {
 	size_t	capacity;
 };
 
+/* series functions */
 serie_int32_t		 *serie_int32_new(void);
 static const char 	 *set_name(serie_int32_t *, const char *);
 static char 	 	 *get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
+static int 	 	 resize(serie_int32_t *);
+static int 	 	 add(serie_int32_t *, int32_t);
+
+/* utils */
+static char 		 *xstrdup(const char *);
+static void		 *xcalloc(size_t , size_t);
+
+static serie_int32_ops int32_ops = {
+	set_name,
+	get_name,
+	free_serie,
+	resize,
+	add,
+};
+
 
 int
 main(int argc, char *argv[])
@@ -65,6 +81,18 @@ main(int argc, char *argv[])
 	s1->ops->free_serie(s1);
 
 	return (0);
+}
+
+static int
+resize(serie_int32_t *s)
+{
+	return 0;
+}
+
+static int
+add(serie_int32_t *s, int32_t v)
+{
+	return 0;
 }
 
 static void
@@ -93,31 +121,45 @@ set_name(serie_int32_t *s, const char *name)
 		return NULL;
 	}
 
-	n = strdup(name);
-	if (n == NULL)
-		err(1, NULL);
+	n = xstrdup(name);
 
 	SERIE->name = n;
 	return NULL;
 }
-
-static serie_int32_ops int32_ops = {
-	set_name,
-	get_name,
-	free_serie,
-	resize,
-	add,
-};
 
 serie_int32_t *
 serie_int32_new(void)
 {
 	struct serie_int32_impl *s;
 
-	if ((s = calloc(1, sizeof(struct serie_int32_impl))) == NULL)
-		err(1, "failed alloc serie");
+	s = xcalloc(1, sizeof(struct serie_int32_impl));
 
 	s->ops = &int32_ops;
 
 	return (serie_int32_t *)s;
+}
+
+void *
+xcalloc(size_t nmemb, size_t size)
+{
+	void *p;
+
+	if (size == 0 || nmemb == 0)
+		errx(1, "xcalloc: zero size");
+
+	if ((p = calloc(nmemb, size)) == NULL)
+		err(1, NULL);
+
+	return (p);
+}
+
+static char *
+xstrdup(const char *s)
+{
+	char *ss;
+
+	if ((ss = strdup(s)) == NULL)
+		err(1, NULL);
+
+	return (ss);
 }
