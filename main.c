@@ -60,6 +60,7 @@ static int 	 	 add(serie_int32_t *, int32_t);
 /* utils */
 static char 		 *xstrdup(const char *);
 static void		 *xcalloc(size_t , size_t);
+static void		 *xrealloc(void *, size_t);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -68,7 +69,6 @@ static serie_int32_ops int32_ops = {
 	resize,
 	add,
 };
-
 
 int
 main(int argc, char *argv[])
@@ -86,6 +86,20 @@ main(int argc, char *argv[])
 static int
 resize(serie_int32_t *s)
 {
+	int32_t *data;
+	size_t nsize; /* new size */
+
+	nsize = SERIE->size * 2;
+
+	// first time size = 0
+	if (nsize = 0)
+		nsize = 4;
+
+	data = xrealloc(SELF->data, nsize + sizeof(int32_t));
+
+	SELF->data = data;
+	SELF->capacity = nsize;
+
 	return 0;
 }
 
@@ -162,4 +176,13 @@ xstrdup(const char *s)
 		err(1, NULL);
 
 	return (ss);
+}
+
+void *
+xrealloc(void *ptr, size_t size)
+{
+	if ((ptr = realloc(ptr, size)) == NULL)
+		err(1, NULL);
+
+	return (ptr);
 }
