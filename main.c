@@ -32,6 +32,7 @@ typedef struct {
 	int		(*add)(serie_int32_t *, int32_t);
 	size_t		(*size)(serie_int32_t *);
 	int32_t		*(*get)(serie_int32_t *, size_t);
+	int		(*set)(serie_int32_t *, size_t, int32_t);
 } serie_int32_ops;
 
 /* serie_int32 */
@@ -59,6 +60,7 @@ static int 	 	 resize(struct serie_int32_impl *);
 static int 	 	 add(serie_int32_t *, int32_t);
 static size_t		 size(serie_int32_t *);
 static int32_t		 *get(serie_int32_t *, size_t);
+static int		 set(serie_int32_t *, size_t, int32_t);
 
 /* utils */
 static char 		 *xstrdup(const char *);
@@ -72,6 +74,7 @@ static serie_int32_ops int32_ops = {
 	add,
 	size,
 	get,
+	set,
 };
 
 int
@@ -100,10 +103,22 @@ main(int argc, char *argv[])
 	v2 = s1->ops->get(s1, 1);
 	printf("Value on index = 1 is %d\n", *v2);
 
+	printf("Set value of index 0 = 3\n");
+	s1->ops->set(s1, 0, 3);
+	v1 = s1->ops->get(s1, 0);
+	printf("Value on index = 0 is %d\n", *v1);
+
 	s1->ops->free_serie(s1);
 	printf("Free serie\n");
 
 	return (0);
+}
+
+static int
+set(serie_int32_t *s, size_t index, int32_t v)
+{
+	SERIE->data[index] = v;
+	return (1);
 }
 
 static int32_t *
