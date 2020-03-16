@@ -14,32 +14,24 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/*
+ *   @file serie_int32.c
+ *   @brief This source contains serie int32 functions.
+ *
+ *   @author Murilo Ijanc'
+ *   @date 04/19/2018
+ */
+
 #include <err.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "capybara/serie_int32.h"
+#include "capybara/utils.h"
+
 #define SERIE ((struct serie_int32_impl *)s)
-
-typedef struct serie_int32 serie_int32_t;
-
-/* serie_int32 operations */
-typedef struct {
-	const char 	*(*set_name)(serie_int32_t *, const char *);
-	char 		*(*get_name)(serie_int32_t *);
-	void		(*free_serie)(serie_int32_t *);
-	int		(*add)(serie_int32_t *, int32_t);
-	size_t		(*size)(serie_int32_t *);
-	int32_t		*(*get)(serie_int32_t *, size_t);
-	int		(*set)(serie_int32_t *, size_t, int32_t);
-	int		(*delete)(serie_int32_t *, size_t);
-} serie_int32_ops;
-
-/* serie_int32 */
-struct serie_int32 {
-	serie_int32_ops *ops;
-};
 
 /* implementation */
 struct serie_int32_impl {
@@ -53,7 +45,6 @@ struct serie_int32_impl {
 };
 
 /* series functions */
-serie_int32_t		 *serie_int32_new(void);
 static const char 	 *set_name(serie_int32_t *, const char *);
 static char 	 	 *get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
@@ -64,10 +55,6 @@ static int32_t		 *get(serie_int32_t *, size_t);
 static int		 set(serie_int32_t *, size_t, int32_t);
 static int		 delete(serie_int32_t *, size_t);
 
-/* utils */
-static char 		 *xstrdup(const char *);
-static void		 *xcalloc(size_t , size_t);
-static void		 *xrealloc(void *, size_t);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -79,48 +66,6 @@ static serie_int32_ops int32_ops = {
 	set,
 	delete,
 };
-
-int
-main(int argc, char *argv[])
-{
-	int32_t *v1, *v2; // values
-
-	serie_int32_t *s1 = serie_int32_new();
-	s1->ops->set_name(s1, "serie 1");
-
-	printf("Serie name: %s\n", s1->ops->get_name(s1));
-
-	printf("Serie Size: %lu\n", s1->ops->size(s1));
-
-	s1->ops->add(s1, 1);
-	printf("Add value 1 to serie\n");
-	printf("Serie Size: %lu\n", s1->ops->size(s1));
-
-	printf("Add another value = 2\n");
-	s1->ops->add(s1, 2);
-	printf("Serie Size: %lu\n", s1->ops->size(s1));
-
-	v1 = s1->ops->get(s1, 0);
-	printf("Value on index = 0 is %d\n", *v1);
-
-	v2 = s1->ops->get(s1, 1);
-	printf("Value on index = 1 is %d\n", *v2);
-
-	printf("Set value of index 0 = 3\n");
-	s1->ops->set(s1, 0, 3);
-	v1 = s1->ops->get(s1, 0);
-	printf("Value on index = 0 is %d\n", *v1);
-
-	printf("deleted index 0\n");
-	s1->ops->delete(s1, 0);
-	v1 = s1->ops->get(s1, 0);
-	printf("Value on index = 0 is %d\n", *v1);
-
-	s1->ops->free_serie(s1);
-	printf("Free serie\n");
-
-	return (0);
-}
 
 static int
 delete(serie_int32_t *s, size_t index)
@@ -224,38 +169,4 @@ serie_int32_new(void)
 	s->ops = &int32_ops;
 
 	return (serie_int32_t *)s;
-}
-
-void *
-xcalloc(size_t nmemb, size_t size)
-{
-	void *p;
-
-	if (size == 0 || nmemb == 0)
-		errx(1, "xcalloc: zero size");
-
-	if ((p = calloc(nmemb, size)) == NULL)
-		err(1, NULL);
-
-	return (p);
-}
-
-static char *
-xstrdup(const char *s)
-{
-	char *ss;
-
-	if ((ss = strdup(s)) == NULL)
-		err(1, NULL);
-
-	return (ss);
-}
-
-void *
-xrealloc(void *ptr, size_t size)
-{
-	if ((ptr = realloc(ptr, size)) == NULL)
-		err(1, NULL);
-
-	return (ptr);
 }
