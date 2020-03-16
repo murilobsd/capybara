@@ -10,6 +10,9 @@ void test_new_serie_int32(void) {
 	s->ops->free_serie(s);
 }
 
+void setUp (void) {}
+void tearDown (void) {}
+
 int main() {
   	UNITY_BEGIN();
   	RUN_TEST(test_new_serie_int32);
