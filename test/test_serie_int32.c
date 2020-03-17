@@ -57,6 +57,20 @@ test_add_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+void
+test_get_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
+	int32_t *num;
+
+	s->ops->add(s, 1);
+	TEST_ASSERT_EQUAL(1, s->ops->size(s));
+	num = s->ops->get(s, 0);
+	TEST_ASSERT_EQUAL_INT32(1, *num);
+
+	s->ops->free_serie(s);
+}
+
 
 int
 main(void)
@@ -66,5 +80,6 @@ main(void)
   	RUN_TEST(test_set_name_serie_int32);
   	RUN_TEST(test_get_name_serie_int32);
   	RUN_TEST(test_add_serie_int32);
+  	RUN_TEST(test_get_serie_int32);
   	return UNITY_END();
 }
