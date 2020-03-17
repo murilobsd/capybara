@@ -2,6 +2,7 @@
 set(LIB_SRC
   serie_int32.c
   utils.c
+  error.c
 )
 
 
