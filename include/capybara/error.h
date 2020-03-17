@@ -10,3 +10,5 @@ const char *CAPY_ERROR_STRS[] = {
 	"CAPY_ERROR_OK",
 	"CAPY_ERROR_NOMEM",
 };
+
+const char	*capy_error_str(capybara_error_t);
