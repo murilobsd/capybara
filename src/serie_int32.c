@@ -48,8 +48,8 @@ struct serie_int32_impl {
 static const char 	*set_name(serie_int32_t *, const char *);
 static char 	 	*get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
-static int 	 	 resize(struct serie_int32_impl *);
-static int 	 	 add(serie_int32_t *, int32_t);
+static cap_error_t  	 resize(struct serie_int32_impl *);
+static cap_error_t 	 add(serie_int32_t *, int32_t);
 static size_t		 size(serie_int32_t *);
 static int32_t		*get(serie_int32_t *, size_t);
 static int		 set(serie_int32_t *, size_t, int32_t);
@@ -95,7 +95,7 @@ size(serie_int32_t *s)
 	return SERIE->size;
 }
 
-static int
+static cap_error_t
 resize(struct serie_int32_impl *s)
 {
 	int32_t *data;
@@ -107,23 +107,29 @@ resize(struct serie_int32_impl *s)
 	if (nsize == 0)
 		nsize = 4;
 
+	// TODO: check xrealloc return
 	data = xrealloc(SERIE->data, nsize + sizeof(int32_t));
 
 	SERIE->data = data;
 	SERIE->capacity = nsize;
 
-	return 0;
+	return (CAPY_ERROR_OK);
 }
 
-static int
+static cap_error_t
 add(serie_int32_t *s, int32_t v)
 {
+	cap_error_t err;
+
 	if (SERIE->size == SERIE->capacity)
-		resize(SERIE);
+		if ((err = resize(SERIE)) != CAPY_ERROR_OK) {
+			free_serie(s);
+			return err;
+		}
 
 	SERIE->data[SERIE->size++] = v;
 
-	return 0;
+	return (CAPY_ERROR_OK);
 }
 
 static void
