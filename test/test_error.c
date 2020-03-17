@@ -45,6 +45,18 @@ test_error_ok_str(void)
 		strlen("CAPY_ERROR_OK"));
 }
 
+void
+test_error_nomem_str(void)
+{
+	capybara_error_t err;
+
+	err = func_return_error_nomem();
+
+	TEST_ASSERT_EQUAL_STRING("CAPY_ERROR_NOMEM", capy_error_str(err));
+	TEST_ASSERT_EQUAL_STRING_LEN("CAPY_ERROR_NOMEM", capy_error_str(err),
+		strlen("CAPY_ERROR_NOMEM"));
+}
+
 int
 main(void)
 {
