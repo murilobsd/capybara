@@ -1,7 +1,6 @@
 # <img alt="Capybara" src="https://m0x.ru/capybara/capybara.png" height="150">
 
-[![Build Status](https://travis-ci.org/murilobsd/capybara.svg?branch=master)]
-	(https://travis-ci.org/murilobsd/capybara)
+[![Build Status](https://travis-ci.org/murilobsd/capybara.svg?branch=master)](https://travis-ci.org/murilobsd/capybara)
 
 Capybara is the Dataframe in C
 
@@ -24,7 +23,7 @@ git submodule update --init --recursive
 ```sh
 mkdir build
 cd build
-cmake
+cmake ..
 ```
 
 ### Build
