@@ -4,11 +4,6 @@ typedef enum capybara_error_e {
 
 	// Out of memomry
 	CAPY_ERROR_NOMEM
-} capybara_error_t;
+} cap_error_t;
 
-const char *CAPY_ERROR_STRS[] = {
-	"CAPY_ERROR_OK",
-	"CAPY_ERROR_NOMEM",
-};
-
-const char	*capy_error_str(capybara_error_t);
+extern const char	*capy_error_str(cap_error_t);

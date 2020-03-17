@@ -9,13 +9,13 @@ setUp(void) {}
 void
 tearDown(void) {}
 
-capybara_error_t
+cap_error_t
 func_return_error_ok(void)
 {
 	return CAPY_ERROR_OK;
 }
 
-capybara_error_t
+cap_error_t
 func_return_error_nomem(void)
 {
 	return CAPY_ERROR_NOMEM;
@@ -36,7 +36,7 @@ test_error_nomem(void)
 void
 test_error_ok_str(void)
 {
-	capybara_error_t err;
+	cap_error_t err;
 
 	err = func_return_error_ok();
 
@@ -48,7 +48,7 @@ test_error_ok_str(void)
 void
 test_error_nomem_str(void)
 {
-	capybara_error_t err;
+	cap_error_t err;
 
 	err = func_return_error_nomem();
 
