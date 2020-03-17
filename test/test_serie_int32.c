@@ -23,6 +23,20 @@ void
 test_set_name_serie_int32(void)
 {
   	serie_int32_t *s = serie_int32_new();
+
+	TEST_ASSERT_NULL(s->ops->get_name(s));
+
+	s->ops->set_name(s, "serie");
+
+	TEST_ASSERT_NOT_NULL(s->ops->get_name(s));
+
+	s->ops->free_serie(s);
+}
+
+void
+test_get_name_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
 	s->ops->set_name(s, "serie");
 
 	TEST_ASSERT_EQUAL_STRING("serie", s->ops->get_name(s));
@@ -31,11 +45,13 @@ test_set_name_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+
 int
 main(void)
 {
   	UNITY_BEGIN();
   	RUN_TEST(test_new_serie_int32);
   	RUN_TEST(test_set_name_serie_int32);
+  	RUN_TEST(test_get_name_serie_int32);
   	return UNITY_END();
 }
