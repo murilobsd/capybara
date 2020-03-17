@@ -3,8 +3,11 @@
 #include "unity.h"
 #include "capybara/serie_int32.h"
 
-void setUp (void) {}
-void tearDown (void) {}
+void
+setUp(void) {}
+
+void
+tearDown(void) {}
 
 void
 test_new_serie_int32(void)
@@ -28,7 +31,9 @@ test_set_name_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
-int main() {
+int
+main(void)
+{
   	UNITY_BEGIN();
   	RUN_TEST(test_new_serie_int32);
   	RUN_TEST(test_set_name_serie_int32);
