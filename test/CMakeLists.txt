@@ -1,5 +1,6 @@
 set(TEST_SRC
   test_serie_int32.c
+  test_error.c
 )
 
 
