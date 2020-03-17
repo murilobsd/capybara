@@ -45,13 +45,13 @@ struct serie_int32_impl {
 };
 
 /* series functions */
-static const char 	 *set_name(serie_int32_t *, const char *);
-static char 	 	 *get_name(serie_int32_t *);
+static const char 	*set_name(serie_int32_t *, const char *);
+static char 	 	*get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
 static int 	 	 resize(struct serie_int32_impl *);
 static int 	 	 add(serie_int32_t *, int32_t);
 static size_t		 size(serie_int32_t *);
-static int32_t		 *get(serie_int32_t *, size_t);
+static int32_t		*get(serie_int32_t *, size_t);
 static int		 set(serie_int32_t *, size_t, int32_t);
 static int		 delete(serie_int32_t *, size_t);
 
