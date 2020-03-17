@@ -3,7 +3,6 @@ language: c
 os:
   - linux
   - osx
-  - windows
 
 compiler:
   - gcc
@@ -14,8 +13,7 @@ before_script:
   - cd build
   - cmake ..
 
-script:
-  - if ["$TRAVIS_OS_NAME" = "windows"]; then mingw32-make && mingw32-make test else make && make test fi
+script: make && make test
 
 notifications:
   irc:
