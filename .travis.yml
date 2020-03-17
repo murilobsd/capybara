@@ -14,7 +14,8 @@ before_script:
   - cd build
   - cmake ..
 
-script: make && make test
+script:
+  - if ["$TRAVIS_OS_NAME" = "windows"]; then mingw32-make && mingw32-make test else make && make test
 
 notifications:
   irc:
