@@ -1,6 +1,7 @@
 # <img alt="Capybara" src="https://m0x.ru/capybara/capybara.png" height="150">
 
 [![Build Status](https://travis-ci.org/murilobsd/capybara.svg?branch=master)](https://travis-ci.org/murilobsd/capybara)
+[![license](https://img.shields.io/badge/License-BSD-blue.svg?style=for-the-badge)](LICENSE)
 
 Capybara is the Dataframe in C
 
