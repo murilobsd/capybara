@@ -7,6 +7,8 @@ set(TEST_SRC
 ### Build unity. ###
 add_library(unity STATIC unity/src/unity.c)
 target_include_directories(unity PUBLIC unity/src)
+add_compile_definitions(UNITY_INCLUDE_DOUBLE)
+add_compile_definitions(UNITY_DOUBLE_PRECISION=0.001f)
 
 ### Build each test. ###
 foreach(ISRC ${TEST_SRC})
