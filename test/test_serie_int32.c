@@ -172,6 +172,24 @@ test_sum_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+void
+test_variance_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
+	double variance = 0;
+
+	s->ops->add(s, 5);
+	s->ops->add(s, 2);
+	s->ops->add(s, 1);
+	s->ops->add(s, 4);
+
+	variance = s->ops->variance(s);
+
+	TEST_ASSERT_EQUAL_DOUBLE(2.5, variance);
+
+	s->ops->free_serie(s);
+}
+
 int
 main(void)
 {

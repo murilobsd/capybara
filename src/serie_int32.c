@@ -50,6 +50,7 @@ static int32_t		*min(serie_int32_t *);
 static int32_t		*max(serie_int32_t *);
 static long double	 mean(serie_int32_t *);
 static long double	 sum(serie_int32_t *);
+static double	 	 variance(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -64,7 +65,30 @@ static serie_int32_ops int32_ops = {
 	max,
 	mean,
 	sum,
+	variance,
 };
+
+static double
+variance(serie_int32_t *s)
+{
+	size_t 			i;
+	double 	variance 	= 0;
+	const size_t sz 	= size(s);
+	int32_t 		*x;
+	long double delta	= 0;
+	const long double mn	= mean(s);
+
+	if (sz == 0)
+		return (0);
+
+	for (i = 0; i < sz; i++) {
+		x = get(s, i);
+		delta = (long double)*x - mn;
+		variance += (delta * delta - variance) / (i + 2);
+	}
+
+	return variance;
+}
 
 static long double
 sum(serie_int32_t *s)
