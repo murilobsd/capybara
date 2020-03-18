@@ -47,6 +47,7 @@ static int32_t		*get(serie_int32_t *, size_t);
 static int		 set(serie_int32_t *, size_t, int32_t);
 static int		 delete(serie_int32_t *, size_t);
 static int32_t		 *min(serie_int32_t *);
+static int32_t		 *max(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -58,7 +59,30 @@ static serie_int32_ops int32_ops = {
 	set,
 	delete,
 	min,
+	max,
 };
+
+static int32_t *
+max(serie_int32_t *s)
+{
+	size_t 		i;
+	int32_t 	*max;
+	int32_t		*x;
+	const size_t  	sz = size(s);
+
+	if (sz == 0)
+		return (0);
+
+	max = get(s, 0);
+
+	for (i = 0; i < sz; i++) {
+		x = get(s, i);
+		if (*x > *max)
+			max = x;
+	}
+
+	return max;
+}
 
 static int32_t *
 min(serie_int32_t *s)
