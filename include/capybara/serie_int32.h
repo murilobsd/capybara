@@ -15,6 +15,7 @@ typedef struct {
 	int32_t		*(*min)(serie_int32_t *);
 	int32_t		*(*max)(serie_int32_t *);
 	long double	(*mean)(serie_int32_t *);
+	long double	(*sum)(serie_int32_t *);
 } serie_int32_ops;
 
 /* serie_int32 */

@@ -154,6 +154,24 @@ test_mean_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+void
+test_sum_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
+	long double sum = 0;
+
+	s->ops->add(s, 5);
+	s->ops->add(s, 2);
+	s->ops->add(s, 1);
+	s->ops->add(s, 4);
+
+	sum = s->ops->sum(s);
+
+	TEST_ASSERT_EQUAL_DOUBLE(12.0, sum);
+
+	s->ops->free_serie(s);
+}
+
 int
 main(void)
 {
@@ -169,6 +187,7 @@ main(void)
 	RUN_TEST(test_min_serie_int32);
 	RUN_TEST(test_max_serie_int32);
 	RUN_TEST(test_mean_serie_int32);
+	RUN_TEST(test_sum_serie_int32);
 
   	return UNITY_END();
 }

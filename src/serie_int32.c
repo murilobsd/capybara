@@ -49,6 +49,7 @@ static int		 delete(serie_int32_t *, size_t);
 static int32_t		*min(serie_int32_t *);
 static int32_t		*max(serie_int32_t *);
 static long double	 mean(serie_int32_t *);
+static long double	 sum(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -62,7 +63,27 @@ static serie_int32_ops int32_ops = {
 	min,
 	max,
 	mean,
+	sum,
 };
+
+static long double
+sum(serie_int32_t *s)
+{
+	size_t 		i;
+	long double 	sum = 0;
+	const size_t 	sz = size(s);
+	int32_t 	*x;
+
+	if (sz == 0)
+		return (0);
+
+	for (i = 0; i < sz; i++) {
+		x = get(s, i);
+		sum += (long double)*x;
+	}
+
+	return sum;
+}
 
 static long double
 mean(serie_int32_t *s)
@@ -80,7 +101,6 @@ mean(serie_int32_t *s)
 		mean += ((long double)*x - mean) / (i + 1);
 	}
 
-	printf("Mean: %Lf\n", mean);
 	return mean;
 }
 
