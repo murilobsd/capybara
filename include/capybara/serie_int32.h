@@ -14,6 +14,7 @@ typedef struct {
 	int		(*delete)(serie_int32_t *, size_t);
 	int32_t		*(*min)(serie_int32_t *);
 	int32_t		*(*max)(serie_int32_t *);
+	long double	(*mean)(serie_int32_t *);
 } serie_int32_ops;
 
 /* serie_int32 */
