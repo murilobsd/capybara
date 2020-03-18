@@ -12,6 +12,7 @@ typedef struct {
 	int32_t		*(*get)(serie_int32_t *, size_t);
 	int		(*set)(serie_int32_t *, size_t, int32_t);
 	int		(*delete)(serie_int32_t *, size_t);
+	int32_t		*(*min)(serie_int32_t *);
 } serie_int32_ops;
 
 /* serie_int32 */

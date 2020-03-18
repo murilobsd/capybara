@@ -14,14 +14,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/*
- *   @file serie_int32.c
- *   @brief This source contains serie int32 functions.
- *
- *   @author Murilo Ijanc'
- *   @date 04/19/2018
- */
-
 #include <err.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -54,7 +46,7 @@ static size_t		 size(serie_int32_t *);
 static int32_t		*get(serie_int32_t *, size_t);
 static int		 set(serie_int32_t *, size_t, int32_t);
 static int		 delete(serie_int32_t *, size_t);
-
+static int32_t		 *min(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -65,7 +57,30 @@ static serie_int32_ops int32_ops = {
 	get,
 	set,
 	delete,
+	min,
 };
+
+static int32_t *
+min(serie_int32_t *s)
+{
+	size_t 		i;
+	int32_t 	*min;
+	int32_t		*x;
+	const size_t  	sz = size(s);
+
+	if (sz == 0)
+		return (0);
+
+	min = get(s, 0);
+
+	for (i = 0; i < sz; i++) {
+		x = get(s, i);
+		if (*x < *min)
+			min = x;
+	}
+
+	return min;
+}
 
 static int
 delete(serie_int32_t *s, size_t index)

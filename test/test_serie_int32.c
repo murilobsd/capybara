@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 
 #include "unity.h"
 #include "capybara/serie_int32.h"
@@ -99,11 +100,30 @@ test_delete_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+void
+test_min_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
+	int32_t *min;
+
+	s->ops->add(s, 5);
+	s->ops->add(s, 2);
+	s->ops->add(s, 1);
+	s->ops->add(s, 4);
+
+	min = s->ops->min(s);
+	printf("min: %d\n", *min);
+
+	TEST_ASSERT_EQUAL_INT32(1, *min);
+
+	s->ops->free_serie(s);
+}
 
 int
 main(void)
 {
   	UNITY_BEGIN();
+
   	RUN_TEST(test_new_serie_int32);
   	RUN_TEST(test_set_name_serie_int32);
   	RUN_TEST(test_get_name_serie_int32);
@@ -111,5 +131,7 @@ main(void)
   	RUN_TEST(test_get_serie_int32);
   	RUN_TEST(test_set_serie_int32);
   	RUN_TEST(test_delete_serie_int32);
+	RUN_TEST(test_min_serie_int32);
+
   	return UNITY_END();
 }
