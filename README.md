@@ -8,6 +8,10 @@ Capybara is the Dataframe in C
 - **Source code:** https://github.com/murilobsd/capybara
 - **Bug reports:** https://github.com/murilobsd/capybara/issues
 
+## Features
+
+- Multiple platforms: OpenBSD, Linux, MacOS.
+
 ## Install
 
 ### Download the sources
