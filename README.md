@@ -1,6 +1,6 @@
 # <img alt="Capybara" src="https://m0x.ru/capybara/capybara.png" height="150">
 
-[![Build Status](https://travis-ci.org/murilobsd/capybara.svg?branch=master)](https://travis-ci.org/murilobsd/capybara)
+![Travis (.org) branch](https://img.shields.io/travis/murilobsd/capybara/master?style=for-the-badge)
 [![license](https://img.shields.io/badge/License-BSD-blue.svg?style=for-the-badge)](LICENSE)
 
 Capybara is the Dataframe in C
@@ -8,6 +8,7 @@ Capybara is the Dataframe in C
 - **Website:** https://m0x.ru/capybara/
 - **Source code:** https://github.com/murilobsd/capybara
 - **Bug reports:** https://github.com/murilobsd/capybara/issues
+- **Contact:** irc.freenode.com ##capybara
 
 ## Features
 
