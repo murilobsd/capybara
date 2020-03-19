@@ -1,8 +1,8 @@
 typedef enum capybara_error_e {
-	// No error
+	/* No error */
 	CAPY_ERROR_OK = 0,
 
-	// Out of memomry
+	/* Out of memomry */
 	CAPY_ERROR_NOMEM
 } cap_error_t;
 

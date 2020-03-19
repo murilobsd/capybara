@@ -220,11 +220,11 @@ resize(struct serie_int32_impl *s)
 
 	nsize = SERIE->size * 2;
 
-	// first time size = 0
+	/* first time size = 0 */
 	if (nsize == 0)
 		nsize = 4;
 
-	// TODO: check xrealloc return
+	/* TODO: check xrealloc return */
 	data = xrealloc(SERIE->data, nsize + sizeof(int32_t));
 
 	SERIE->data = data;
