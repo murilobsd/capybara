@@ -15,6 +15,7 @@
  */
 
 #include <err.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -48,9 +49,10 @@ static int		 set(serie_int32_t *, size_t, int32_t);
 static int		 delete(serie_int32_t *, size_t);
 static int32_t		*min(serie_int32_t *);
 static int32_t		*max(serie_int32_t *);
-static long double	 mean(serie_int32_t *);
+static double	 	mean(serie_int32_t *);
 static long double	 sum(serie_int32_t *);
 static double	 	 variance(serie_int32_t *);
+static double	 	 std_dev(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -66,7 +68,17 @@ static serie_int32_ops int32_ops = {
 	mean,
 	sum,
 	variance,
+	std_dev
 };
+
+static double
+std_dev(serie_int32_t *s)
+{
+	const double vr		= variance(s);
+	const double s_dev	= sqrt(vr);
+
+	return s_dev;
+}
 
 static double
 variance(serie_int32_t *s)
@@ -76,7 +88,7 @@ variance(serie_int32_t *s)
 	const size_t sz 	= size(s);
 	int32_t 		*x;
 	long double delta	= 0;
-	const long double mn	= mean(s);
+	const double mn	= mean(s);
 
 	if (sz == 0)
 		return (0);
@@ -84,7 +96,7 @@ variance(serie_int32_t *s)
 	for (i = 0; i < sz; i++) {
 		x = get(s, i);
 		delta = (long double)*x - mn;
-		variance += (delta * delta - variance) / (i + 2);
+		variance += (delta * delta - variance) / (i + 1);
 	}
 
 	return variance;
@@ -109,11 +121,11 @@ sum(serie_int32_t *s)
 	return sum;
 }
 
-static long double
+static double
 mean(serie_int32_t *s)
 {
 	size_t 		i;
-	long double 	mean = 0;
+	double 	mean = 0;
 	const size_t 	sz = size(s);
 	int32_t 	*x;
 
@@ -122,7 +134,7 @@ mean(serie_int32_t *s)
 
 	for (i = 0; i < sz; i++) {
 		x = get(s, i);
-		mean += ((long double)*x - mean) / (i + 1);
+		mean += ((double)*x - mean) / (i + 1);
 	}
 
 	return mean;
