@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-### Change the project name and the version. ###
 project(capybara VERSION 0.0.1 LANGUAGES C)
-
-# pleaase no colors
-set(CMAKE_COLOR_MAKEFILE, NO)
 
 ### Add Cmake module to CMAKE_MODULE_PATH. ###
 if(NOT CMAKE_MODULE_PATH)
@@ -29,9 +25,9 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/test)
   add_subdirectory(test)
 endif(EXISTS ${CMAKE_SOURCE_DIR}/test)
 
-if(EXISTS ${CMAKE_SOURCE_DIR}/doc)
-  add_subdirectory(doc)
-endif(EXISTS ${CMAKE_SOURCE_DIR}/doc)
+if(EXISTS ${CMAKE_SOURCE_DIR}/docs)
+  add_subdirectory(docs)
+endif(EXISTS ${CMAKE_SOURCE_DIR}/docs)
 
 ### Create a TGZ package of the library. ###
 set(CPACK_GENERATOR TGZ)
@@ -52,7 +48,7 @@ include(CPack)
 option(CLANGFORMAT OFF)
 set(EXCLUDE_DIR
   ${CMAKE_SOURCE_DIR}/cmake
-  ${CMAKE_SOURCE_DIR}/doc
+  ${CMAKE_SOURCE_DIR}/docs
   ${CMAKE_SOURCE_DIR}/test/unity
   ${CMAKE_BINARY_DIR}
 )
