@@ -25,6 +25,7 @@
 #include "capybara/utils.h"
 
 #define SERIE ((struct serie_int32_impl *)s)
+#define N(x) (sizeof(x) / sizeof(x[0]))
 
 /* implementation */
 struct serie_int32_impl {
@@ -52,6 +53,8 @@ static double	 	mean(serie_int32_t *);
 static long double	 sum(serie_int32_t *);
 static double	 	 variance(serie_int32_t *);
 static double	 	 std_dev(serie_int32_t *);
+static void		 sort(serie_int32_t *);
+static int		 cmp(const void *, const void *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -67,8 +70,27 @@ static serie_int32_ops int32_ops = {
 	mean,
 	sum,
 	variance,
-	std_dev
+	std_dev,
+	sort
 };
+
+static void
+sort(serie_int32_t *s)
+{
+	const size_t sz = size(s);
+	const size_t szint = sizeof(int32_t);
+
+	qsort(SERIE->data, sz, szint, cmp);
+}
+
+static int
+cmp(const void *a, const void *b)
+{
+	const int32_t *ia = (const int32_t *)a;
+	const int32_t *ib = (const int32_t *)b;
+
+	return *ia - *ib;
+}
 
 static double
 std_dev(serie_int32_t *s)
