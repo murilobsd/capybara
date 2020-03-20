@@ -5,7 +5,6 @@ set(LIB_SRC
   error.c
 )
 
-
 ### Get the current working branch. ###
 execute_process(
   COMMAND git rev-parse --abbrev-ref HEAD

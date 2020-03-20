@@ -37,7 +37,6 @@ struct serie_int32_impl {
 	size_t	capacity;
 };
 
-/* series functions */
 static const char 	*set_name(serie_int32_t *, const char *);
 static char 	 	*get_name(serie_int32_t *);
 static void 	 	 free_serie(serie_int32_t *);
