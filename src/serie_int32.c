@@ -55,6 +55,7 @@ static double	 	 variance(serie_int32_t *);
 static double	 	 std_dev(serie_int32_t *);
 static void		 sort(serie_int32_t *);
 static int		 cmp(const void *, const void *);
+static double	 	 median(serie_int32_t *);
 
 static serie_int32_ops int32_ops = {
 	set_name,
@@ -71,8 +72,30 @@ static serie_int32_ops int32_ops = {
 	sum,
 	variance,
 	std_dev,
-	sort
+	sort,
+	median,
 };
+
+static double
+median(serie_int32_t *s)
+{
+	double median		= 0.0;
+  	const size_t sz 	= size(s);
+  	const size_t lhs 	= (sz - 1) / 2 ;
+  	const size_t rhs 	= sz / 2 ;
+
+	if (sz == 0)
+		return 0.0;
+
+	sort(s);
+
+	if (lhs == rhs)
+		median = (double)*get(s, lhs);
+	else
+		median = (double)((*get(s, lhs) + *get(s, rhs)) / 2.0);
+
+	return median;
+}
 
 static void
 sort(serie_int32_t *s)

@@ -35,6 +35,7 @@ typedef struct {
 	double		(*variance)(serie_int32_t *);
 	double		(*std_dev)(serie_int32_t *);
 	void		(*sort)(serie_int32_t *);
+	double		(*median)(serie_int32_t *);
 } serie_int32_ops;
 
 /* serie_int32 */

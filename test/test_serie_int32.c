@@ -227,6 +227,25 @@ test_sort_serie_int32(void)
 	s->ops->free_serie(s);
 }
 
+void
+test_median_serie_int32(void)
+{
+  	serie_int32_t *s = serie_int32_new();
+	double median = 0;
+
+	s->ops->add(s, 5);
+	s->ops->add(s, 2);
+	s->ops->add(s, 1);
+	s->ops->add(s, 4);
+
+	median = s->ops->median(s);
+
+	TEST_ASSERT_EQUAL_DOUBLE(3.0, median);
+
+	s->ops->free_serie(s);
+}
+
+
 
 
 int
@@ -248,6 +267,7 @@ main(void)
 	RUN_TEST(test_variance_serie_int32);
 	RUN_TEST(test_sd_dev_serie_int32);
 	RUN_TEST(test_sort_serie_int32);
+	RUN_TEST(test_median_serie_int32);
 
   	return UNITY_END();
 }
