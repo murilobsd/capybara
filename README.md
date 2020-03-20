@@ -13,7 +13,8 @@ Capybara is the Dataframe in C
 ## Features
 
 - Multiple platforms: OpenBSD, Linux, MacOS.
-- Statistic Functions: mean, sum, min, max, variance ...
+- Statistic Functions: mean, min, max, sum, variance, standard deviation
+- Series type: int32
 
 ## Install
 
