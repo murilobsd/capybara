@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "unity.h"
-#include "capybara/serie_int32.h"
+#include "capybara/serie_int8.h"
 
 void
 setUp(void) {}
@@ -11,9 +11,9 @@ void
 tearDown(void) {}
 
 void
-test_new_serie_int32(void)
+test_new_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 
 	TEST_ASSERT_NOT_NULL(s);
 
@@ -21,9 +21,9 @@ test_new_serie_int32(void)
 }
 
 void
-test_set_name_serie_int32(void)
+test_set_name_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 
 	TEST_ASSERT_NULL(s->ops->get_name(s));
 
@@ -35,9 +35,9 @@ test_set_name_serie_int32(void)
 }
 
 void
-test_get_name_serie_int32(void)
+test_get_name_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	s->ops->set_name(s, "serie");
 
 	TEST_ASSERT_EQUAL_STRING("serie", s->ops->get_name(s));
@@ -47,9 +47,9 @@ test_get_name_serie_int32(void)
 }
 
 void
-test_add_serie_int32(void)
+test_add_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 
 	s->ops->add(s, 1);
 
@@ -59,39 +59,39 @@ test_add_serie_int32(void)
 }
 
 void
-test_get_serie_int32(void)
+test_get_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
-	int32_t *num;
+  	serie_int8_t *s = serie_int8_new();
+	int8_t *num;
 
 	s->ops->add(s, 1);
 	num = s->ops->get(s, 0);
-	TEST_ASSERT_EQUAL_INT32(1, *num);
+	TEST_ASSERT_EQUAL_INT8(1, *num);
 
 	s->ops->free_serie(s);
 }
 
 void
-test_set_serie_int32(void)
+test_set_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
-	int32_t *num;
+  	serie_int8_t *s = serie_int8_new();
+	int8_t *num;
 
 	s->ops->add(s, 1);
 	s->ops->set(s, 0, 2);
 	num = s->ops->get(s, 0);
 
 	TEST_ASSERT_EQUAL(1, s->ops->size(s));
-	TEST_ASSERT_EQUAL_INT32(2, *num);
+	TEST_ASSERT_EQUAL_INT8(2, *num);
 
 	s->ops->free_serie(s);
 }
 
 void
-test_delete_serie_int32(void)
+test_delete_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
-	int32_t *num;
+  	serie_int8_t *s = serie_int8_new();
+	int8_t *num;
 
 	s->ops->add(s, 1);
 	s->ops->delete(s, 0);
@@ -101,10 +101,10 @@ test_delete_serie_int32(void)
 }
 
 void
-test_min_serie_int32(void)
+test_min_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
-	int32_t *min;
+  	serie_int8_t *s = serie_int8_new();
+	int8_t *min;
 
 	s->ops->add(s, 5);
 	s->ops->add(s, 2);
@@ -113,16 +113,16 @@ test_min_serie_int32(void)
 
 	min = s->ops->min(s);
 
-	TEST_ASSERT_EQUAL_INT32(1, *min);
+	TEST_ASSERT_EQUAL_INT8(1, *min);
 
 	s->ops->free_serie(s);
 }
 
 void
-test_max_serie_int32(void)
+test_max_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
-	int32_t *max;
+  	serie_int8_t *s = serie_int8_new();
+	int8_t *max;
 
 	s->ops->add(s, 5);
 	s->ops->add(s, 2);
@@ -131,15 +131,15 @@ test_max_serie_int32(void)
 
 	max = s->ops->max(s);
 
-	TEST_ASSERT_EQUAL_INT32(5, *max);
+	TEST_ASSERT_EQUAL_INT8(5, *max);
 
 	s->ops->free_serie(s);
 }
 
 void
-test_mean_serie_int32(void)
+test_mean_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	long double mean = 0;
 
 	s->ops->add(s, 5);
@@ -155,9 +155,9 @@ test_mean_serie_int32(void)
 }
 
 void
-test_sum_serie_int32(void)
+test_sum_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	long double sum = 0;
 
 	s->ops->add(s, 5);
@@ -173,9 +173,9 @@ test_sum_serie_int32(void)
 }
 
 void
-test_variance_serie_int32(void)
+test_variance_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	double variance = 0;
 
 	s->ops->add(s, 5);
@@ -191,9 +191,9 @@ test_variance_serie_int32(void)
 }
 
 void
-test_sd_dev_serie_int32(void)
+test_sd_dev_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	double std_dev = 0;
 
 	s->ops->add(s, 5);
@@ -209,9 +209,9 @@ test_sd_dev_serie_int32(void)
 }
 
 void
-test_sort_serie_int32(void)
+test_sort_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 
 	s->ops->add(s, 5);
 	s->ops->add(s, 2);
@@ -227,9 +227,9 @@ test_sort_serie_int32(void)
 }
 
 void
-test_median_serie_int32(void)
+test_median_serie_int8(void)
 {
-  	serie_int32_t *s = serie_int32_new();
+  	serie_int8_t *s = serie_int8_new();
 	double median = 0;
 
 	s->ops->add(s, 5);
@@ -252,21 +252,21 @@ main(void)
 {
   	UNITY_BEGIN();
 
-  	RUN_TEST(test_new_serie_int32);
-  	RUN_TEST(test_set_name_serie_int32);
-  	RUN_TEST(test_get_name_serie_int32);
-  	RUN_TEST(test_add_serie_int32);
-  	RUN_TEST(test_get_serie_int32);
-  	RUN_TEST(test_set_serie_int32);
-  	RUN_TEST(test_delete_serie_int32);
-	RUN_TEST(test_min_serie_int32);
-	RUN_TEST(test_max_serie_int32);
-	RUN_TEST(test_mean_serie_int32);
-	RUN_TEST(test_sum_serie_int32);
-	RUN_TEST(test_variance_serie_int32);
-	RUN_TEST(test_sd_dev_serie_int32);
-	RUN_TEST(test_sort_serie_int32);
-	RUN_TEST(test_median_serie_int32);
+  	RUN_TEST(test_new_serie_int8);
+  	RUN_TEST(test_set_name_serie_int8);
+  	RUN_TEST(test_get_name_serie_int8);
+  	RUN_TEST(test_add_serie_int8);
+  	RUN_TEST(test_get_serie_int8);
+  	RUN_TEST(test_set_serie_int8);
+  	RUN_TEST(test_delete_serie_int8);
+	RUN_TEST(test_min_serie_int8);
+	RUN_TEST(test_max_serie_int8);
+	RUN_TEST(test_mean_serie_int8);
+	RUN_TEST(test_sum_serie_int8);
+	RUN_TEST(test_variance_serie_int8);
+	RUN_TEST(test_sd_dev_serie_int8);
+	RUN_TEST(test_sort_serie_int8);
+	RUN_TEST(test_median_serie_int8);
 
   	return UNITY_END();
 }

@@ -1,5 +1,6 @@
 ### Add the source/headers of your library. ###
 set(LIB_SRC
+  serie_int8.c
   serie_int32.c
   utils.c
   error.c
